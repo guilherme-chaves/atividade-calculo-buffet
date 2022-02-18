@@ -1,4 +1,5 @@
 import sqlite3 from 'sqlite3';
+import { Sequelize } from 'sequelize/types';
 const db = { connection: {} }
 
 export default () => {
@@ -6,7 +7,6 @@ export default () => {
 
     const openDb = async (date, numPeople, prediction) => {
         db.connection = new sqlite3.Database('./db/database.db', runMigrations(date, numPeople, prediction));
-        return db;
     }
     
     const runMigrations = async (date, numPeople, prediction) => {
@@ -21,8 +21,7 @@ export default () => {
     }
 
     const newEvent = async (date, numPeople, prediction) => {
-        const stmt = db.connection.prepare(`INSERT INTO eventConsumption (dateHour, numPeople, prediction)
-                        VALUES (?, ?, ?)`);
+        const stmt = db.connection.run(`INSERT INTO eventConsumption (dateHour, numPeople, prediction) VALUES (?, ?, ?)`);
         stmt.bind(date, numPeople, prediction);
         stmt.run();
         stmt.finalize(closeDb);

@@ -1,30 +1,73 @@
-import sqlite3 from 'sqlite3';
-import chainConsumption from './db/chainConsumption.js';
-import chainGetList from './db/chainGetList.js';
-import chainML from './db/chainML.js';
-import chainNewEvent from './db/chainNewEvent.js';
+import dbOpts from './db/getDb.cjs'
+import EventConsumption from './db/model.cjs'
+const { sequelize, Op } = dbOpts();
 
-const db = { connection: {} }
 
 export default () => {
+    (async () => {
+        try {
+            await sequelize.sync();
+        } catch (error) {
+            console.log(error);
+        }
+    })();
+
+
     const newEvent = async (date, numPeople, prediction) => {
-        const { runChain } = chainNewEvent();
-        runChain(date, numPeople, prediction);
+        try {
+            const model = EventConsumption();
+            await model.create({
+                dateHour: date,
+                numPeople,
+                prediction
+            });
+        } catch(err) {
+            console.log(error);
+        }
     }
     
     const getLastEvents = async () => {
-        const { runChain } = chainGetList();
-        return runChain();
+        try {
+            const model = EventConsumption();
+            const resultSelect = await model.findAll({
+                order: [['idEvent', 'DESC']],
+                limit: 25
+            })
+            return resultSelect;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const getMLData = async () => {
-        const { runChain } = chainML();
-        return runChain();
+        try {
+            const model = EventConsumption();
+            const resultSelect = await model.findAll({
+                attributes: ['numPeople', 'consumption'],
+                order: [['numPeople', 'ASC']],
+                where: {
+                    [Op.not]: [
+                        { consumption: 0 },
+                    ]
+                }
+            });
+            return resultSelect;
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     const updateConsumption = async (idEvent, consumption) => {
-        const { runChain  } = chainConsumption();
-        runChain(idEvent, consumption);
+        try {
+            const model = EventConsumption();
+            await model.update({ consumption }, {
+                where: {
+                    idEvent
+                }
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {

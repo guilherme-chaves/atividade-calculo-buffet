@@ -6,7 +6,6 @@ export default () => {
 
     const openDb = async () => {
         db.connection = new sqlite3.Database('./db/database.db', runMigrations);
-        return db;
     }
     
     const runMigrations = async () => {

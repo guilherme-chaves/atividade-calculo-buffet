@@ -5,13 +5,16 @@ import ml from './ml.js'
 const app = express()
 const { getLastEvents, newEvent, updateConsumption } = database();
 const { trainModel, getPrediction } = ml();
-const port = 3000
+const port = 8100
 const model = { regression: {} }
 
 trainModel().then((regr) => {
+    console.log(regr)
     model.regression = regr
-})
+});
 
+
+console.log(model);
 
 // Ativa o CORS para requisições feitas na rede local
 const corsOptions = {
@@ -37,12 +40,10 @@ app.get('/listaeventos', (req, res) => {
 app.post('/novoevento', (req, res) => {
     try {
         let data = req.body
-        if(typeof data.datehour === 'string' && typeof data.people === 'number'){
-            getPrediction(model.regression, data.people).then((prediction) => {
-                console.log(prediction);
-                newEvent(data.datehour, data.people, prediction).then((prediction) => {
-                    res.status(200).json({ prediction })
-                })
+        if(typeof data.datehour == 'string' && typeof data.people == 'number') {
+            const prediction = getPrediction(model.regression, data.people)
+            newEvent(data.datehour, data.people, prediction).then(() => {
+                res.status(200).json({ prediction })
             })
             return
         } else {
