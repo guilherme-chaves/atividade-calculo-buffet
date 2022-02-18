@@ -2,19 +2,20 @@ import express from 'express'
 import cors from 'cors'
 import database from './database.js'
 import ml from './ml.js'
+
 const app = express()
 const { getLastEvents, newEvent, updateConsumption } = database();
 const { trainModel, getPrediction } = ml();
+
+
 const port = 8100
+// Instância do modelo de ML a ser alimentado pela função TrainModel()
 const model = { regression: {} }
 
 trainModel().then((regr) => {
-    console.log(regr)
     model.regression = regr
 });
 
-
-console.log(model);
 
 // Ativa o CORS para requisições feitas na rede local
 const corsOptions = {
@@ -27,7 +28,7 @@ app.use(express.json())
 app.use('/', express.static('public'))
 
 
-// Recebe as requisições do método POST a rota /result e retorna o valor + 2
+// Recebe as requisições do método GET a rota /listaeventos e retorna as linhas do banco
 app.get('/listaeventos', (req, res) => {
     getLastEvents().then((result) => {
         res.status(200).json(result)
@@ -36,7 +37,7 @@ app.get('/listaeventos', (req, res) => {
 })
 
 
-// Recebe as requisições do método POST a rota /result e retorna o valor + 2
+// Recebe as requisições do método POST a rota /novoevento e retorna a quantidade de alimento prevista
 app.post('/novoevento', (req, res) => {
     try {
         let data = req.body
@@ -57,7 +58,7 @@ app.post('/novoevento', (req, res) => {
 })
 
 
-// Recebe as requisições do método POST a rota /result e retorna o valor + 2
+// Recebe as requisições do método POST a rota /consumo e retorna status de sucesso
 app.post('/consumo', (req, res) => {
     try {
         let data = req.body
