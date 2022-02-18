@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Calculo de buffet</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <main class="container-fluid p-3">
+            <div class="row">
+                <div class="col-md-6" id="forms">
+                    <section class="container">
+                        <h2>Criar novo evento</h2>
+                        <form name="form-evento" id="form-evento">
+                            <div class="mb-3 mt-3">
+                                <label for="data-hora" class="form-label">Data do evento:</label>
+                                <input type="datetime-local" min="0" name="data-hora" class="form-control" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pessoas" class="form-label">Qtd. pessoas:</label>
+                                <input type="number" min="1" name="pessoas" class="form-control" required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Criar</button>
+                            <p id="previsao"></p>
+                        </form>
+                    </section>
+                    <section class="container">
+                        <h2>Inserir total consumido</h2>
+                        <form name="form-consumo" id="form-consumo">
+                            <div class="mb-3 mt-3">
+                                <label for="idevento" class="form-label">ID do evento:</label>
+                                <input type="number" min="0" name="id-evento" class="form-control" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="consumo" class="form-label">Consumo:</label>
+                                <input type="number" min="0" name="consumo" class="form-control" required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </form>
+                    </section>
+                </div>
+                <section class="col-md-6">
+                    <h2>Tabela dos últimos eventos feitos</h2>
+                    <button type="button" class="btn btn-primary" id="load-table">Carregar tabela</button>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Data-hora</th>
+                                <th>Qtd. pessoas</th>
+                                <th>Previsão</th>
+                                <th>Consumido</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <span id="spinner" class="spinner-border"></span>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script src="script.js"></script>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "atividade-calculo-buffet",
+  "version": "1.0.0",
+  "description": "Atividade avaliativa para a disciplina de Programacao em Linguagem Script",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilherme-chaves/atividade-calculo-buffet.git"
+  },
+  "author": "guilherme-chaves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilherme-chaves/atividade-calculo-buffet/issues"
+  },
+  "homepage": "https://github.com/guilherme-chaves/atividade-calculo-buffet#readme",
+  "private": true,
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "ml-regression-polynomial": "^2.2.0",
+    "sqlite3": "^5.0.2"
+  },
+  "type": "module"
+}
