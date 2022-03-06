@@ -2,7 +2,7 @@
 Protótipo desenvolvido para a disciplina de Programação de Linguagem Script.
 
 Calcula a quantidade necessária de arroz para um evento/dia dado um modelo baseado em dados de dias anteriores (sendo necessário ter ao menos 10 eventos com o consumo total cadastrados).
-Os dados são salvos através do banco de dados SQLite.
+<br>Os dados dos eventos são salvos com o uso de um banco de dados SQLite.
 
 # Instruções
 Para rodar o projeto, instale as bibliotecas necessárias com o código abaixo:
